@@ -1,7 +1,7 @@
 export default function CreateForm(props) {
     return (
 
-        <form className=" green-400 flex-col w-2/3 bg-green-400 mx-auto my-8" onSubmit={cookiehandeler}>
+        <form className=" green-400 flex-col w-2/3 bg-green-400 mx-auto my-8" onSubmit={props.cookiehandeler}>
           
         <h1 className="text-center p-4 ">Create Cookie Stand</h1>
 
