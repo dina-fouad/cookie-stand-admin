@@ -34,7 +34,7 @@ let sum = 0
     
   allstores([...report,cookie])
   
-
+ 
   let totalSum=totals.map((item,idx)=>{
     if (idx===totals.length-1){
         return item + cookie.total
@@ -45,6 +45,8 @@ let sum = 0
  settotals(totalSum)
 
 }
+
+
   // (Math.random() * (max - min + 1) + min) 
 
   return (
