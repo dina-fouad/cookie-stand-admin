@@ -35,7 +35,7 @@ export default function ReportTable(props) {
                             {props.totals && props.totals.map(item=>(
                                 <td className="border border-gray-600">{item}</td>         
                             )) }
-                            <td className=" border border-gray-600">{props.totals}</td>
+                            <td className=" border border-gray-600">{props.total}</td>
                         </tr>
                     </tfoot>
                 </table>
