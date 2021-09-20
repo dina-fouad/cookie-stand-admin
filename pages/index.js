@@ -1,72 +1,38 @@
 import Head from 'next/head'
 import { useState } from 'react';
+import { useAuth } from '../contexts/auth'
+import CookieStandAdmin from '../components/CookieStandAdmin';
+import LoginForm from '../components/LoginForm';
+import useResource from '../hooks/useResource'
 
 import Header from '../components/Header.js';
-import CreateForm from '../components/CreateForm.js';
-import ReportTable from '../components/ReportTable.js';
-import Footer from '../components/Footer.js'
+
 
 export default function Home() {
 
-  const[hours,setHours]=useState(['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'])
-  const[report,allstores]=useState([0])
-  const [totals, settotals] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
-
-  function cookiehandeler(event){
-
-    event.preventDefault();
-
-    
-     let  minCust=(event.target.min.value)
-     let maxCust=(event.target.max.value)
-     let avgCookies= (event.target.avg.value)
-
-let sum = 0
-    const cookie = {
-      location : event.target.location.value,
-      sales:hours.map(()=>Math.ceil(avgCookies*(Math.ceil(Math.random()*(maxCust-minCust)+minCust)))),
-    }
-
-    for (let i=0; i< cookie.sales.length; i++){
-      sum=sum+cookie.sales[i]
-    }
-    cookie.total=sum
-    
-  allstores([...report,cookie])
-  
- 
-  let totalSum=totals.map((item,idx)=>{
-    if (idx===totals.length-1){
-        return item + cookie.total
-    }
-     return item + cookie.sales[idx]
-  })
-   
- settotals(totalSum)
-
-}
-
-
-  // (Math.random() * (max - min + 1) + min) 
+  const { user, login, logout } = useAuth();
+  const { resources, loading, createResource, deleteResource } = useResource();
 
   return (
-    
-      <div className="">
-        <Head>
-          <title>Cookie Stand Admin</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Header/>
-        <main className=" flex flex-col my-10 justify-center mx-auto h-full items-center">
-        <CreateForm cookiehandeler={cookiehandeler}/>
-        <ReportTable   
-        hours={hours}
-          report={report}
-          totals={totals}
-         />
-        </main>
-      
-        <Footer report={report} />
-      </div>
-    )
-  }
+    <div className="bg-green-50 ">
+      <Head>
+        <title>Cookie Stand Admin</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header title="Cookie Stand Admin" />
+
+      {user ? (
+        <>
+          <CookieStandAdmin />
+        </>
+      ) : (
+        <>
+          <LoginForm />
+        </>
+      )}
+
+    </div>
+  )
+}
+
+  
